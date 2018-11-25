@@ -1,0 +1,31 @@
+{extend name="base:common"/}
+{block name="head"}
+
+{/block}
+{block name="body"}
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>主页</legend>
+</fieldset>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <ul class="layui-row layui-col-space10 layui-this">
+                <li class="layui-col-xs6">
+                    <a lay-href="app/content/comment.html" class="layadmin-backlog-body">
+                        <h3>文章统计</h3>
+                        <p><cite>{$count.content??''}</cite></p>
+                    </a>
+                </li>
+                <li class="layui-col-xs6">
+                    <a lay-href="app/forum/list.html" class="layadmin-backlog-body">
+                        <h3>用户统计</h3>
+                        <p><cite>{$count.user??''}</cite></p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</form>
+{/block}
+{block name="script"}
+{/block}

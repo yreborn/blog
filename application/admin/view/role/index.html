@@ -1,0 +1,99 @@
+{extend name="base:common"/}
+{block name="head"}
+
+
+{/block}
+{block name="body"}
+<table class="layui-hide" id="test" lay-filter="test"></table>
+{/block}
+{block name="script"}
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add">增加</button>
+    </div>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+    layui.use(['layer','table','form'],function () {
+        var layer=layui.layer
+            ,table=layui.table
+            ,$=layui.jquery;
+
+        table.render({
+            elem: '#test'
+            ,url:"{:url('indexData')}"
+            ,toolbar: '#toolbarDemo'
+            ,title: '角色数据表'
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+                ,{field:'rolename', title:'角色名称', width:120, edit: 'text'}
+                ,{field:'ruleid', title:'权限列表', width:150,templet: function(res){
+                    var d = res.getRule;
+                    return d && (d.name)?'<em>' + d.name + '</em>': '<em></em>';
+                }}
+                ,{field:'create_time', title:'加入时间', width:120}
+                ,{field:'userName', title:'创建人', width:120,templet: function(res){
+                    var d = res.getUser;
+                    return d && (d.user_name)?'<em>' + d.user_name + '</em>': '<em></em>';
+                }}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:170}
+            ]]
+            ,page:true
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+                case 'add':
+                    window.location.href="{:url('addrolehtml')}";
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            console.log(data)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    $.ajax({
+                        url:"{:url('delrole')}"
+                        ,dataType:'json'
+                        ,type:'post'
+                        ,data:{
+                            id:data.id,
+                        }
+                        ,success:function (result) {
+                            layer.msg(result.msg,{icon: 6}) ;
+                        }
+                    });
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                window.location.href="{:url('uprolehtml')}?id="+data.id
+            }
+        });
+    });
+</script>
+{/block}

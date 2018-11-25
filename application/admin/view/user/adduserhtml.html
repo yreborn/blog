@@ -1,0 +1,146 @@
+{extend name="base:common"/}
+{block name="head"}
+
+
+{/block}
+{block name="body"}
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>用户管理</legend>
+    </fieldset>
+
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="user_name" lay-verify="text|required" autocomplete="off" placeholder="用户名" class="layui-input" value="{$user.user_name??''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" lay-verify="required|tips" autocomplete="请输入密码"  class="layui-input" value="{$user.password??''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">email</label>
+            <div class="layui-input-inline">
+                <input type="text" name="email" lay-verify="required|email" autocomplete="off" placeholder="email" class="layui-input" value="{$user.email??''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色</label>
+            <div class="layui-input-inline">
+                <select name="roleid">
+                    <option value="">请选择角色</option>
+                    {volist name="role" id="vo" key="key"}
+                        <option value="{$vo.id??''}" selected="">{$vo.rolename??''}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="layui-upload">
+            <button type="button" class="layui-btn" id="upload">上传图片</button>
+            <div class="layui-upload-list">
+                <img class="layui-upload-img"  id="demo1" src="{$user.image??''}">
+                <p id="demoText"></p>
+                <input type="hidden" name="image">
+            </div>
+        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">是否激活</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<button class="layui-btn activate" lay-filter="demo1" value="{$user.activate??''}" {if isset($user.activate) && $user.activate ==1 } disabled="" {/if}>{$user.activate??''}</button>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input type="hidden" name="id" value="{$user.id??''}">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                <button type="button" class="layui-btn layui-btn-primary return">返回</button>
+            </div>
+        </div>
+    </form>
+{/block}
+{block name="script"}
+    <script>
+        layui.use(['form', 'layedit', 'laydate','upload'], function() {
+            var form = layui.form
+                , layer = layui.layer
+                , $=layui.jquery
+                ,upload = layui.upload;
+
+            form.on('submit(demo1)', function (data) {
+                var userid = $("input[name='id']").val();
+                var url = userid ? "{:url('upuser')}" : "{:url('adduser')}";
+                $.ajax({
+                    url: url,
+                    data: data.field,
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.code == 200) {
+                            layer.msg(data.msg, {icon: 6}, function () {
+                                window.location.href = "{:url('index')}";
+                            });
+                        } else {
+                            layer.msg(data.msg, {icon: 5});
+                        }
+                    },
+                    error: function (data) {
+                        layer.msg(data.message);
+                    }
+                });
+                return false;
+            });
+
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#upload'
+                ,url: '{:url("upload")}'
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                }
+                ,done: function(res){
+                    //如果上传失败
+                    if(res.code > 0){
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                    $("input[name='image']").val(res);
+                }
+            });
+
+            //返回页面
+            $(document).off('click', ".return").on('click', ".return", function () {
+                window.location.href="{:url('index')}";
+            });
+
+//                $(document).off('click', ".activate").on('click', ".activate", function () {
+//                    var activate=$(this).val();
+//                    if(activate==0){
+//                        $.ajax({
+//                            type:"POST",
+//                            url:"{:url('edit_ticket_attr')}",
+//                            dataType:"json",
+//                            data:data.field,
+//                            success:function (data) {
+//                                console.log(data);
+//                                if (data.status == 1){
+//                                    layer.closeAll();
+//                                    layer.msg(data.msg, {icon: 6});
+//                                    location.reload();
+//
+//                                }else {
+//                                    layer.msg(data.msg,{icon:5})
+//                                }
+//                                return false;
+//                            }
+//                        });
+//                        return false;
+//                    }
+//                });
+        });
+    </script>
+{/block}

@@ -1,0 +1,81 @@
+{extend name="base:common"/}
+{block name="head"}
+
+{/block}
+{block name="body"}
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>权限管理</legend>
+</fieldset>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">链接</label>
+        <div class="layui-input-inline">
+            <input type="text" name="line" lay-verify="text|required" autocomplete="off" placeholder="链接" class="layui-input" value="{$rule.line??''}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" lay-verify="text|required" autocomplete="off" placeholder="名称" class="layui-input" value="{$rule.name??''}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">导航栏</label>
+        <div class="layui-input-block">
+            <input type="radio" name="pid" value="0" title="顶级导航栏" {if isset($rule.pid) && $rule.pid == 0} checked{/if}>
+            <input type="radio" name="pid" value="1" title="左侧导航栏" {if isset($rule.pid) && $rule.pid == 1} checked{/if}>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否显示</label>
+        <div class="layui-input-block">
+            <input type="radio" name="isshow" value="0" title="不显示" {if isset($rule.isshow) && $rule.isshow == 0} checked{/if}>
+            <input type="radio" name="isshow" value="1" title="显示" {if isset($rule.isshow) && $rule.isshow == 1} checked{/if}>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <input type="hidden" name="id" value="{$rule.id??''}">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary return">返回</button>
+        </div>
+    </div>
+</form>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['form', 'laydate'], function() {
+        var form = layui.form
+            , layer = layui.layer
+            , $=layui.jquery;
+
+        form.on('submit(demo1)', function (data) {
+            var id = $("input[name='id']").val();
+            var url = id ? "{:url('uprule')}" : "{:url('addrule')}";
+            $.ajax({
+                url: url,
+                data: data.field,
+                type: 'POST',
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.msg(data.msg, {icon: 6}, function () {
+                            window.location.href = "{:url('index')}";
+                        });
+                    } else {
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                },
+                error: function (data) {
+                    layer.msg(data.message);
+                }
+            });
+            return false;
+        });
+
+        //返回页面
+        $(document).off('click', ".return").on('click', ".return", function () {
+            window.location.href="{:url('index')}";
+        });
+    });
+</script>
+{/block}

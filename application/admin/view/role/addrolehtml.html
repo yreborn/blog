@@ -1,0 +1,79 @@
+{extend name="base:common"/}
+{block name="head"}
+
+{/block}
+{block name="body"}
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>角色管理</legend>
+</fieldset>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="rolename" lay-verify="text|required" autocomplete="off" placeholder="标题" class="layui-input" value="{$role.rolename??''}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限列表</label>
+        <div class="layui-input-block">
+            {notempty name="$role.ruleid"}
+                {volist name="rule" id="vo" key="key"}
+                    {in name="vo.id" value="$role.ruleid??''"}
+                        <input type="checkbox" name="ruleid[]" lay-skin="primary" title="{$vo.name}" checked="" value="{$vo.id}">
+                    {else/}
+                        <input type="checkbox" name="ruleid[]" lay-skin="primary" title="{$vo.name}" value="{$vo.id}">
+                    {/in}
+                {/volist}
+            {else/}
+                {volist name="rule" id="vo" key="key"}
+                    <input type="checkbox" name="ruleid[]" lay-skin="primary" title="{$vo.name}" value="{$vo.id}">
+                {/volist}
+            {/notempty}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <input type="hidden" name="id" value="{$role.id??''}">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary return">返回</button>
+        </div>
+    </div>
+</form>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['form', 'laydate'], function() {
+        var form=layui.form
+            ,layer=layui.layer
+            ,$=layui.jquery;
+
+        form.on('submit(demo1)', function (data) {
+            var id=$("input[name='id']").val();
+            var url=id ? "{:url('uprole')}" : "{:url('addrole')}";
+            $.ajax({
+                url: url,
+                data: data.field,
+                type: 'POST',
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.msg(data.msg, {icon: 6}, function () {
+                            window.location.href = "{:url('index')}";
+                        });
+                    } else {
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                },
+                error: function (data) {
+                    layer.msg(data.message);
+                }
+            });
+            return false;
+        });
+
+        //返回页面
+        $(document).off('click', ".return").on('click', ".return", function () {
+            window.location.href="{:url('index')}";
+        });
+    });
+</script>
+{/block}

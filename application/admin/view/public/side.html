@@ -1,0 +1,21 @@
+<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            {volist name="sideMenu" id="vo"}
+            <li class="layui-nav-item layui-nav-itemed">
+                <a class="" href="javascript:;">{$vo.name}</a>
+                <dl class="layui-nav-child">
+                    {notempty name="$vo.submenu"}
+                    {volist name="$vo.submenu" id="v"}
+                    {eq name="v.isshow" value="1"}
+                    <dd class="{$currentUrl==$v.line ? 'layui-this' : ''}"><a href="{:url($v.line)}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$v.name}</a></dd>
+                    {/eq}
+                    {/volist}
+                    {/notempty}
+                </dl>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+</div>
