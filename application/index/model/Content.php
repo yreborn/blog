@@ -20,6 +20,7 @@ class Content extends BaseModel
     public static function getContent($recommend=null)
     {
         $where=ContentLogic::condition($recommend);
+        dump('123');
         return self::relation('getUser,getArticleClass')->where($where)->order('id','desc')->paginate('10',false,['query'=>input()]);
     }
 
