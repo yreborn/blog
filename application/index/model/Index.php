@@ -11,5 +11,4 @@ namespace app\index\model;
 
 class Index extends BaseModel
 {
-
 }
