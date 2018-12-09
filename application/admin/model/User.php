@@ -13,14 +13,26 @@ use app\admin\logic\Login as LoginLogic;
 use app\admin\service\Login as LoginService;
 use app\admin\service\User as UserService;
 
+
 class User extends BaseModel
 {
     /**
      * 判断是否在登陆正确
-     * @return array
+     * Created by Reborn
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * Date: 2018-12-03
+     * Time: 23:20
      */
     public static function isLogin()
     {
+        $captha=input('verify','');
+        if( !captcha_check($captha ))
+        {
+            return resultType(false,'验证码');
+        }
         $data=LoginService::setLoginValidate('login');
         $data['password']=md5($data['password']);
         $data['delete']=1;
@@ -28,12 +40,22 @@ class User extends BaseModel
         return LoginLogic::isLogin($res,$data);
     }
 
+
     /**
      * 注册用户
-     * @return array
+     * Created by Reborn
+     * @return \think\response\Json
+     * @throws \Exception
+     * Date: 2018-12-06
+     * Time: 23:18
      */
     public static function register()
     {
+        $captha=input('verify','');
+        if( !captcha_check($captha ))
+        {
+            return resultType(false,'验证码');
+        }
         $data=LoginService::setLoginValidate('register');
         $data['password']=md5($data['password']);
         $res=self::create($data);

@@ -32,15 +32,17 @@ class Login
     /**
      * 返回验证信息
      * Created by Reborn
-     * 适用版本 v1.1
      * @param null $scene 场景名称
      * @return array
+     * @throws \Exception
+     * Date: 2018-12-06
+     * Time: 23:14
      */
     public static function setLoginValidate($scene=null)
     {
         $loginValidate = new loginValidate();
         $loginValidate->doCheck($scene);
-        return $loginValidate->getParamsByRule(request()->param(),$scene);
+        return $loginValidate->getParamsByRule(input(),$scene);
     }
 
     /**

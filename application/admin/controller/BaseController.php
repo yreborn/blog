@@ -19,10 +19,11 @@ class BaseController extends Controller
 
     public function initialize()
     {
+        $this->loginType();//登录状态
         $this->getNav();//获取顶部导航
         $this->getsideNav();//左侧导航栏
-        $this->loginType();//登录状态
-        $this->isActivate();//是否激活
+
+//        $this->isActivate();//是否激活
     }
 
     //头部菜单

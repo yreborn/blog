@@ -9,33 +9,51 @@
 namespace app\admin\model;
 
 use app\admin\model\Rule as RuleModel;
+use app\admin\service\Role as RoleService;
 
 class Navigation extends BaseModel
 {
+
     /**
      * 头部菜单
+     * Created by Reborn
      * @param array $where
-     * @return false|\PDOStatement|string|\think\Collection
+     * @return array|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * Date: 2018-12-09
+     * Time: 21:03
      */
     public static function getNav($where = [])
     {
-        $where['pid']=0;
-        $where['delete']=1;
+        $role=ruleData(RoleService::getRoleByUserid());
+        $where[]=['pid','=',0];
+        $where[]=['delete','=',1];
+        $where[]=['id','IN',$role];
         return (new RuleModel())->where($where)->select();
     }
 
     /**
      * 获取所有菜单
-     * @return false|\PDOStatement|string|\think\Collection
+     * Created by Reborn
+     * @return array|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * Date: 2018-12-09
+     * Time: 21:03
      */
     public static function getallNav()
     {
-        $where['delete']=1;
+        $role=ruleData(RoleService::getRoleByUserid());
+        $where[]=['delete','=',1];
+        $where[]=['id','IN',$role];
         return (new RuleModel())->field('id,line,name,pid,isshow')->where($where)->select();
     }
 
     /**
-     * 获取主订单id
+     * 头部菜单id
      * @return array
      */
     public static function getTopNav()

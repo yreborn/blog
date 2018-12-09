@@ -9,15 +9,18 @@
 namespace app\admin\service;
 
 use app\admin\validate\RuleValidate;
+use app\index\model\BaseModel;
 
-class Rule
+class Rule extends BaseModel
 {
     /**
      * 规则验证
      * Created by Reborn
-     * 适用版本 v1.1
      * @param null $scene
      * @return array
+     * @throws \Exception
+     * Date: 2018-12-09
+     * Time: 21:11
      */
     public static function ruleVAalidate($scene=null)
     {
@@ -25,4 +28,5 @@ class Rule
         $ruleValidate->doCheck($scene);
         return $ruleValidate->getParamsByRule(input(),$scene);
     }
+
 }

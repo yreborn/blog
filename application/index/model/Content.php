@@ -14,8 +14,11 @@ class Content extends BaseModel
     /**
      * 获取所有的文章
      * Created by Reborn
-     * 适用版本 v1.1
+     * @param null $recommend
      * @return \think\Paginator
+     * @throws \think\exception\DbException
+     * Date: 2018-11-30
+     * Time: 22:25
      */
     public static function getContent($recommend=null)
     {
@@ -26,8 +29,12 @@ class Content extends BaseModel
     /**
      * 获取当前文章
      * Created by Reborn
-     * 适用版本 v1.1
-     * @return array|false|\PDOStatement|string|\think\Model
+     * @return array|\PDOStatement|string|\think\Model|null
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * Date: 2018-11-30
+     * Time: 22:25
      */
     public static function getContentinfo()
     {

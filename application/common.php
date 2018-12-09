@@ -137,6 +137,24 @@ function to_json($code=0,$msg='获取成功',$res=[])
     return json($result, 200);
 }
 
+/**
+ * 规则数组
+ * Created by Reborn
+ * @param $data
+ * @return array
+ * Date: 2018-12-09
+ * Time: 22:10
+ */
+function ruleData($data)
+{
+    $res=[];
+    foreach ($data as $val){
+        $exdata=explode(',',$val);
+        $res=array_merge($res,$exdata);
+    }
+    return array_unique($res);
+}
+
 
 
 

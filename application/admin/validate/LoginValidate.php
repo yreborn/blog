@@ -13,7 +13,7 @@ class LoginValidate extends BaseValidate
     protected $rule =   [
         'user_name'  => 'require|unique:user',
         'password'   => 'require',
-        'email'     => 'require|email|unique:user',
+        'email'      => 'require|email|unique:user',
     ];
 
     protected $message  =   [

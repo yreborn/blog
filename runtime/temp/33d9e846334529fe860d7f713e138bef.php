@@ -1,4 +1,4 @@
-<?php /*a:1:{s:72:"D:\PhpStudy\PHPTutorial\WWW\blog\application\admin\view\login\login.html";i:1541689151;}*/ ?>
+<?php /*a:1:{s:72:"D:\PhpStudy\PHPTutorial\WWW\blog\application\admin\view\login\login.html";i:1544347039;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,18 +32,18 @@
                     <div class="layui-row">
                         <div class="layui-col-xs7">
                             <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-                            <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+                            <input type="text" name="verify" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
                         </div>
                         <div class="layui-col-xs5">
                             <div style="margin-left: 10px;">
-                                <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
+                                <div><img src="<?php echo url('Login/verify'); ?>"  onclick="this.src=this.src+'?'" alt="captcha" /></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item" style="margin-bottom: 20px;">
                     <input type="checkbox" name="remember" lay-skin="primary" title="记住密码"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>记住密码</span><i class="layui-icon layui-icon-ok"></i></div>
-                    <a href="<?php echo url('register/register'); ?>" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
+                    <!--<a href="<?php echo url('register/register'); ?>" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>-->
                 </div>
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="demo1">登 入</button>
@@ -68,38 +68,6 @@
         </div>
     </div>
 </form>
-
-        <!--<input type="hidden" name="type" value="<?php echo isset($type) ? htmlentities($type) : ''; ?>">-->
-        <!--<div class="layui-form-item">-->
-            <!--<div class="layui-inline">-->
-                <!--<label class="layui-form-label">用户名</label>-->
-                <!--<div class="layui-input-inline">-->
-                    <!--<input type="tel" name="user_name"  autocomplete="off" class="layui-input">-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="layui-inline">-->
-                <!--<label class="layui-form-label">密码</label>-->
-                <!--<div class="layui-input-inline">-->
-                    <!--<input type="password" name="password"  autocomplete="off" class="layui-input">-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<?php if(!(empty($type) || (($type instanceof \think\Collection || $type instanceof \think\Paginator ) && $type->isEmpty()))): ?>-->
-            <!--<div class="layui-inline">-->
-                <!--<label class="layui-form-label">邮箱</label>-->
-                <!--<div class="layui-input-inline">-->
-                    <!--<input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<?php endif; ?>-->
-        <!--</div>-->
-        <!--<div class="layui-form-item">-->
-            <!--<div class="layui-input-block">-->
-                <!--<button class="layui-btn" lay-submit="" lay-filter="demo1"><?php echo !empty($type) ? '注册' : '登录'; ?></button>-->
-                <!--<button type="button" class="layui-btn layui-btn-primary register"><?php echo !empty($type) ? '登录' : '注册'; ?></button>-->
-            <!--</div>-->
-        <!--</div>-->
-
-
 <script src="/static/index/layui/layui.js"></script>
 <script>
     layui.use(['form'],function () {

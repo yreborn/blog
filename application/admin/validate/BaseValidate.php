@@ -15,14 +15,18 @@ class BaseValidate extends Validate
 {
     /**
      * 验证器 适合全局自定义验证
+     * Created by Reborn
      * @param null $scene 场景
      * @return bool
-     * @throws ParamException
+     * @throws \Exception
+     * Date: 2018-12-06
+     * Time: 23:07
      */
     public function doCheck($scene=null)
     {
         $request=Request::instance();
         $params=$request->param();
+
         //判断是否存在场景验证
         if (!$this->scene($scene)->check($params)) {
             exception($this->getError(), 500,'\think\exception\ValidateException');
