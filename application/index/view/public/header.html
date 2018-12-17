@@ -1,0 +1,23 @@
+<div class="header">
+    <div class="menu-btn">
+        <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+        <a href="{:url('index')}">
+            <span>MYBLOG</span>
+            <img src="/static/res/img/logo.png">
+        </a>
+    </h1>
+    <div class="nav">
+        <a href="{:url('index')}" class="active">全部</a>
+        {volist name="articleclass" id="vo" key="key"}
+        <a href="{:url('index',['articleid'=>$vo.id])}" class="active">{$vo.classname}</a>
+        {/volist}
+    </div>
+    <ul class="layui-nav header-down-nav">
+        <a href="{:url('index')}" class="active">全部</a>
+        {volist name="articleclass" id="vo" key="key"}
+        <a href="{:url('index',['articleid'=>$vo.id])}" class="active">{$vo.classname}</a>
+        {/volist}
+    </ul>
+</div>

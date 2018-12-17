@@ -9,6 +9,7 @@
 namespace app\index\controller;
 
 use app\index\model\Content as ContentModel;
+use app\index\model\ArticleClass as ArticleClassModel;
 
 class Index extends BaseController
 {
@@ -16,8 +17,9 @@ class Index extends BaseController
     public function index()
     {
         $content=ContentModel::getContent();
+        $articleclass=ArticleClassModel::articleClass();
         $recommend=ContentModel::getContent('recommend');
-        return $this->fetch('',compact('content','recommend'));
+        return $this->fetch('',compact('content','recommend','articleclass'));
     }
 
     //获取指定的文章
@@ -28,9 +30,9 @@ class Index extends BaseController
             $this->error('写入失败');
         }
         $contentinfo=ContentModel::getContentinfo();
-        return $this->fetch('',compact('contentinfo'));
+        $articleclass=ArticleClassModel::articleClass();
+        return $this->fetch('',compact('contentinfo','articleclass'));
     }
-
 
 
 }

@@ -19,9 +19,9 @@ class Content
      */
     public static function condition($recommend=null)
     {
-        $where['delete']=1;
+        $where[]=['delete','=',1];
         if($recommend){
-            $where['recommend']=1;
+            $where[]=['recommend','=',1];
         }
         return $where;
     }
