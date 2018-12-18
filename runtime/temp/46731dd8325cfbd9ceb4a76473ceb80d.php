@@ -1,4 +1,4 @@
-<?php /*a:6:{s:72:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\index\index.html";i:1545061106;s:72:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\base\common.html";i:1544968378;s:72:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\public\head.html";i:1544971293;s:74:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\public\header.html";i:1545059742;s:72:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\public\foot.html";i:1545059771;s:74:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\public\footer.html";i:1544971161;}*/ ?>
+<?php /*a:6:{s:72:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\index\index.html";i:1545146658;s:72:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\base\common.html";i:1544968378;s:72:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\public\head.html";i:1544971293;s:74:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\public\header.html";i:1545059742;s:72:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\public\foot.html";i:1545143968;s:74:"D:\PhpStudy\PHPTutorial\WWW\blog\application\index\view\public\footer.html";i:1544971161;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,8 +74,7 @@
       </div>
       <?php endforeach; endif; else: echo "" ;endif; ?>
     </div>
-    <!--<div id="demo" style="text-align: center;"></div>-->
-      <div  id="demo"  style="text-align: center;">
+      <div id="demo">
           <?php echo $content; ?>
       </div>
   </div>
@@ -89,45 +88,23 @@
 
 <div class="footer-wrap">
     <div class="footer w1000">
+
         <div class="qrcode">
+            <div style="text-align: center;">支付宝打赏</div>
             <img src="/static/res/img/erweima.jpg">
         </div>
-        <!--<div class="practice-mode">-->
-            <!--<img src="/static/res/img/down_img.jpg">-->
-            <!--<div class="text">-->
-                <!--<h4 class="title">我的联系方式</h4>-->
-                <!--<p>微信<span class="WeChat">1234567890</span></p>-->
-                <!--<p>手机<span class="iphone">1234567890</span></p>-->
-                <!--<p>邮箱<span class="email">1234567890@qq.com</span></p>-->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="practice-mode">
+            <div style="text-align: center;">微信打赏</div>
+            <div class="qrcode">
+                <img src="/static/res/img/wx.jpg">
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/javascript" src="/static/res/layui/layui.js"></script>
 
 
 
-<script type="text/javascript">
-  // layui.config({
-  //   base: '/static/res/js/util/'
-  // }).use(['element','laypage','jquery','menu'],function(){
-  //   element = layui.element,laypage = layui.laypage,$ = layui.$,menu = layui.menu;
-  //   laypage.render({
-  //     elem: 'demo'
-  //     ,count: 20 //数据总数，从服务端得到
-  //   });
-  //   menu.init();
-  // })
-  // layui.use('laypage', function(){
-  //     var laypage = layui.laypage;
-  //
-  //     //执行一个laypage实例
-  //     laypage.render({
-  //         elem: 'demo' //注意，这里的 test1 是 ID，不用加 # 号
-  //         ,count: 50 //数据总数，从服务端得到
-  //     });
-  // });
-</script>
 
 </body>
 </html>
